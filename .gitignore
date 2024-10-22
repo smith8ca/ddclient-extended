@@ -1,5 +1,5 @@
 # Custom patterns
-src/ssl/*
+**.pem
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
