@@ -24,7 +24,7 @@ RUN chmod 600 /etc/ddclient/ddclient.conf
 # COPY src/ssl/ca.pem /etc/ssl/certs/
 
 # Set permissions for the CA certificate file
-RUN chmod 644 /etc/ssl/certs/ca.pem
+# RUN chmod 644 /etc/ssl/certs/ca.pem
 
 # Copy the FastAPI application
 COPY src/main.py /app/main.py
