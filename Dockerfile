@@ -21,7 +21,7 @@ COPY src/config/ddclient.conf /etc/ddclient/ddclient.conf
 RUN chmod 600 /etc/ddclient/ddclient.conf
 
 # Copy the CA certificate file
-COPY src/ssl/ca.pem /etc/ssl/certs/ca.pem
+COPY src/ssl/* /etc/ssl/certs/
 
 # Set permissions for the CA certificate file
 RUN chmod 644 /etc/ssl/certs/ca.pem
