@@ -8,17 +8,12 @@ All notable changes to this project will be documented in this file.
 
 - Added a new endpoint `/last_healthcheck_timestamp` to return the timestamp of the last health check.
 - Added a new endpoint `/run_ddclient` to manually trigger the `ddclient` to run once and return the output.
-- Added a new endpoint `/last_healthcheck` to return the status of the last health check.
+- Added a new endpoint `/last_healthcheck_status` to return the status of the last health check.
 - Added a new endpoint `/last_update_ip` to return the IP address of the last `ddclient` update.
 - Added a new endpoint `/last_update_timestamp` to return the timestamp of the last `ddclient` update.
 - Added a new endpoint `/last_update_status` to return the status of the last `ddclient` update.
-- Added a new endpoint `/last_ip` to return the most recent IP address sent by `ddclient`.
-- Added a new endpoint `/last_status` to return the last status of the `ddclient` run.
-- Added a new endpoint `/last_update` to return the last update time.
-- Added a new endpoint `/status` to return the status of the last `ddclient` run.
 - Added environment variables `DDCLIENT_INTERVAL`, `HEALTHCHECKS_URL`, and `HEALTHCHECKS_ID` to configure the Docker container.
 - Added a section in the README to explain the Docker environment variables in a table format.
-- Added steps in the README to run the FastAPI application locally without building the container image.
 - Added a "Credits" section in the README to acknowledge the creators of `ddclient` and `FastAPI`.
 
 ### Changed
