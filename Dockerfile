@@ -5,7 +5,7 @@ FROM debian:latest
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Copy the Python requirements file
-COPY requirements.txt /tmp/requirements.txt
+COPY src/requirements.txt /tmp/requirements.txt
 
 # Install ddclient, Python, and FastAPI
 RUN apt-get update && \
@@ -15,22 +15,22 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* /tmp/requirements.txt
 
 # Copy the default ddclient configuration file
-COPY config/ddclient.conf /etc/ddclient/ddclient.conf
+COPY src/config/ddclient.conf /etc/ddclient/ddclient.conf
 
 # Set permissions for the ddclient configuration file
 RUN chmod 600 /etc/ddclient/ddclient.conf
 
 # Copy the CA certificate file
-COPY ssl/ca.pem /etc/ssl/certs/ca.pem
+COPY src/ssl/ca.pem /etc/ssl/certs/ca.pem
 
 # Set permissions for the CA certificate file
 RUN chmod 644 /etc/ssl/certs/ca.pem
 
 # Copy the FastAPI application
-COPY main.py /app/main.py
+COPY src/main.py /app/main.py
 
 # Copy the wrapper script
-COPY ddclient_wrapper.sh /usr/local/bin/ddclient_wrapper.sh
+COPY src/ddclient_wrapper.sh /usr/local/bin/ddclient_wrapper.sh
 
 # Make the wrapper script executable
 RUN chmod +x /usr/local/bin/ddclient_wrapper.sh
