@@ -1,25 +1,31 @@
+# Define the stages of the CI/CD pipeline
 stages:
-  - build
-  - push
+  - build # Stage for building the Docker image
+  - push # Stage for pushing the Docker image to the registry
 
+# Job for building the Docker image
 build:
-  stage: build
+  stage: build # Specify the stage this job belongs to
   script:
+    # Build the Docker image and tag it with the CI registry image name
     - docker build -t $CI_REGISTRY_IMAGE .
-    # - docker build -t 192.168.1.221:5050/smith8ca/smith8ca-ddclient-api .
   artifacts:
     paths:
+      # Specify the files to be saved as artifacts
       - Dockerfile
       - docker-image.tar
   tags:
+    # Specify the runner tags to use for this job
     - europa
 
+# Job for pushing the Docker image to the registry
 push:
-  stage: push
+  stage: push # Specify the stage this job belongs to
   script:
+    # Log in to the Docker registry using the CI registry credentials
     - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin
-    # - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    # Push the Docker image to the registry
     - docker push $CI_REGISTRY_IMAGE
-    # - docker push 192.168.1.221:5050/smith8ca/smith8ca-ddclient-api
   tags:
+    # Specify the runner tags to use for this job
     - europa

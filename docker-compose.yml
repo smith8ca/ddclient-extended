@@ -8,21 +8,12 @@ services:
   ddclient-api:
     container_name: ddclient-api
     environment:
+      - DDCLIENT_INTERVAL=${DDCLIENT_INTERVAL}
       - HEALTHCHECKS_URL=${HEALTHCHECKS_URL}
       - HEALTHCHECKS_ID=${HEALTHCHECKS_ID}
     image: ddclient-api-container:latest
-    labels:
-        - homepage.instance.${HP_INST}.description=${HP_DESC}
-        - homepage.instance.${HP_INST}.group=${HP_GROUP}
-        - homepage.instance.${HP_INST}.href=${HP_HREF}
-        - homepage.instance.${HP_INST}.icon=${HP_ICON}
-        - homepage.instance.${HP_INST}.name=${HP_NAME}
-    #     - homepage.instance.${HP_INST}.widget.fields=${HP_WIDGET_FIELDS}
-    #     - homepage.instance.${HP_INST}.widget.password=${HP_WIDGET_PASSWORD}
-    #     - homepage.instance.${HP_INST}.widget.type=${HP_WIDGET_TYPE}
-    #     - homepage.instance.${HP_INST}.widget.url=${HP_WIDGET_URL}
-    #     - homepage.instance.${HP_INST}.widget.username=${HP_WIDGET_USERNAME}
     ports:
       - ${PORT:-5000}:8000
-    # volumes:
-    #   - ./config/ddclient.conf:/etc/ddclient/ddclient.conf
+    volumes:
+      - ./src/config/ddclient.conf:/tmp/ddclient.conf:ro
+      - ./src/ssl/ca.pem:/etc/ssl/certs/ca.pem:ro

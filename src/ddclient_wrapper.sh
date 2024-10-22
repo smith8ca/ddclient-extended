@@ -3,12 +3,13 @@
 # DDClient Wrapper Script
 #
 # This script runs the ddclient service at regular intervals, logs the output,
-# and sends a health check ping to healthchecks.io. The script runs indefinitely
-# in a loop, sleeping for a specified interval between each iteration.
+# and sends a health check ping to healthchecks.io (if configured). The script runs
+# indefinitely in a loop, sleeping for a specified interval between each iteration.
 #
 # Environment Variables:
-#   HEALTHCHECKS_URL    - The base URL for healthchecks.io.
+#   DDCLIENT_INTERVAL   - The interval between ddclient runs (default: 360m).
 #   HEALTHCHECKS_ID     - The unique ID for the healthchecks.io check.
+#   HEALTHCHECKS_URL    - The base URL for healthchecks.io.
 #
 # Logs:
 #   /var/log/ddclient.log      - Logs the output of ddclient runs.
@@ -24,14 +25,9 @@
 #   at regular intervals.
 #
 # Example:
-#   export HEALTHCHECKS_URL=https://hc-ping.com
+#   export HEALTHCHECKS_URL=https://example.com
 #   export HEALTHCHECKS_ID=YOUR-UNIQUE-ID
 #   ./ddclient_wrapper.sh
-#
-# Variables:
-#   DDCLIENT_LOG        - Path to the ddclient log file.
-#   HEALTHCHECK_LOG     - Path to the health check log file.
-#   INTERVAL            - Time interval between each ddclient run (default: 360m).
 #
 # Author:
 #   Charles Smith
@@ -40,34 +36,49 @@
 #   This script is licensed under the MIT License.
 #
 
-DDCLIENT_LOG="/var/log/ddclient.log"
-HEALTHCHECK_LOG="/var/log/healthcheck.log"
-INTERVAL=360m
-
-# Check if the required environment variables are set
-if [ -z "$HEALTHCHECKS_URL" ] || [ -z "$HEALTHCHECKS_ID" ]; then
-    echo "Error: HEALTHCHECKS_URL and HEALTHCHECKS_ID environment variables must be set."
-    exit 1
+# Copy custom ddclient.conf from temp directory if present
+if [ "/tmp/ddclient.conf" ]; then
+    cp -r /tmp/ddclient.conf /etc/ddclient/ddclient.conf
+    chmod 600 /etc/ddclient/ddclient.conf
 fi
 
+# Log file paths
+DDCLIENT_LOG="/var/log/ddclient.log"
+HEALTHCHECK_LOG="/var/log/healthcheck.log"
+
+# Check if the user-specified ddclient interval environment variable was set
+if [ -z "$DDCLIENT_INTERVAL" ]; then
+    # Default interval to 360 minutes if not set
+    INTERVAL=360m
+else
+    # Use the user-specified interval
+    INTERVAL=$DDCLIENT_INTERVAL
+fi
+
+# Print environment variables for debugging purposes
 echo "Environment variables set ... "
 echo "Healthchecks URL: $HEALTHCHECKS_URL"
 echo "Healthchecks ID: $HEALTHCHECKS_ID"
 echo
 
+# Infinite loop to run ddclient at regular intervals
 while true; do
     # Run ddclient and capture the output
     output=$(ddclient -daemon=0 --file /etc/ddclient/ddclient.conf 2>&1)
 
-    # Print the output of ddclient
+    # Print the output of ddclient to the log file with a timestamp
     echo "[DDCLIENT] | [$(date +%Y-%m-%d_%H:%M:%S)]: $output" >>$DDCLIENT_LOG
 
-    # Send a ping to healthchecks.io
-    output=${curl--cacert /etc/ssl/certs/ca.pem -fsS -m 10 --retry 5 -o /dev/null "$HEALTHCHECKS_URL/$HEALTHCHECKS_ID/$?"}
+    # Check if the required environment variables for healthchecks.io are set
+    if [ "$HEALTHCHECKS_URL" ] && [ "$HEALTHCHECKS_ID" ]; then
+        # Send a ping to healthchecks.io using the CA certificate
+        output=$(curl --cacert /etc/ssl/certs/ca.pem -fsS -m 10 --retry 5 -o /dev/null "$HEALTHCHECKS_URL/$HEALTHCHECKS_ID/$?")
 
-    # Log the status of the healthcheck ping
-    echo "[TIMESTAMP] | $output" >>$HEALTHCHECK_LOG
+        # Log the status of the healthcheck ping with a timestamp
+        echo "[TIMESTAMP] | $output" >>$HEALTHCHECK_LOG
+        echo "Sent health check ping to $HEALTHCHECKS_URL/$HEALTHCHECKS_ID"
+    fi
 
-    # Sleep for a specified interval before the next iteration
+    # Sleep for the specified interval before the next iteration
     sleep $INTERVAL
 done
