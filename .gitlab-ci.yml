@@ -8,8 +8,6 @@ build:
   script:
     - docker build -t $CI_REGISTRY_IMAGE .
     # - docker build -t 192.168.1.221:5050/smith8ca/smith8ca-ddclient-api .
-  tags:
-    - mars
   artifacts:
     paths:
       - Dockerfile
