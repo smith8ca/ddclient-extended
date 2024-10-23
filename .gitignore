@@ -2,6 +2,7 @@
 .local/
 **.pem
 **ddclient.conf
+docker-compose.dev.yml
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
