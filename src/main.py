@@ -170,7 +170,8 @@ def get_last_healthcheck_status():
 
         # Extract the status string using regex
         status_match = re.search(
-            r"\[\d{4}-\d{2}-\d{2}_\d{2}:\d{2}:\d{2}\] \| (\w+)", result.stdout
+            r"\[HEALTHCHECK\] \| \[\d{4}-\d{2}-\d{2}_\d{2}:\d{2}:\d{2}\]: (.+)",
+            result.stdout,
         )
 
         if status_match:
@@ -202,7 +203,8 @@ def get_last_healthcheck_timestamp():
         )
         # Extract the timestamp string using regex
         timestamp_match = re.search(
-            r"\[(\d{4}-\d{2}-\d{2}_\d{2}:\d{2}:\d{2})\] \| \w+", result.stdout
+            r"\[HEALTHCHECK\] \| \[(\d{4}-\d{2}-\d{2}_\d{2}:\d{2}:\d{2})\]:",
+            result.stdout,
         )
         if timestamp_match:
             return timestamp_match.group(1)
@@ -220,6 +222,9 @@ def run_ddclient():
     - `-daemon=0`: Runs ddclient in the foreground.
     - `--file /etc/ddclient/ddclient.conf`: Specifies the configuration file to use.
 
+    Additionally, it writes the output to the ddclient log file in the format:
+    [DDCLIENT] | [$(date +%Y-%m-%d_%H:%M:%S)]: $output
+
     Returns:
         str: The standard output from the ddclient command if it runs successfully.
         str: The exception message if an error occurs during the execution of the command.
@@ -231,7 +236,15 @@ def run_ddclient():
             text=True,
         )
 
-        return result.stdout
+        output = result.stdout
+
+        # Write to the ddclient log file
+        with open("/var/log/ddclient.log", "a") as log_file:
+            log_file.write(
+                f"[DDCLIENT] | [{subprocess.run(['date', '+%Y-%m-%d_%H:%M:%S'], capture_output=True, text=True).stdout.strip()}]: {output}\n"
+            )
+
+        return output
     except Exception as e:
         return str(e)
 
