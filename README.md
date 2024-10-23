@@ -16,6 +16,7 @@ This project packages [ddclient](https://github.com/ddclient/ddclient) into a Do
   - [API Endpoints](#api-endpoints)
     - [Accessing the API Documentation](#accessing-the-api-documentation)
   - [Files](#files)
+  - [Roadmap](#roadmap)
   - [Credits](#credits)
   - [License](#license)
 
@@ -161,6 +162,10 @@ FastAPI automatically generates interactive API documentation. You can access it
 - `app.py`: FastAPI application that provides the API endpoints.
 - `ddclient_wrapper.sh`: Wrapper script that runs ddclient and pings healthchecks.io.
 - `docker-compose.yml`: Docker Compose configuration file.
+
+## Roadmap
+
+For upcoming features and planned improvements, please refer to the [ROADMAP.md](ROADMAP.md) file.
 
 ## Credits
 
