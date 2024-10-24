@@ -153,7 +153,7 @@ The following environment variables can be used to configure the Docker containe
 | ------------------------ | --------------------------------------------- | :---------: | :----------: |
 | `DDCLIENT_INTERVAL`      | The interval between ddclient runs            |    360m     |      No      |
 | `HEALTHCHECKS_URL`       | The base URL for healthchecks.io              |    _N/A_    |      No      |
-| `HEALTHCHECKS_ID`        | The unique ID for the healthchecks.io check   |    _N/A_    |      No      |
+| `HEALTHCHECKS_ID`        | The UUID for the healthchecks.io check        |    _N/A_    |      No      |
 | `HEALTHCHECKS_CUSTOM_CA` | Whether to use a custom certificate authority |    false    |      No      |
 
 &nbsp;
@@ -180,11 +180,11 @@ FastAPI automatically generates interactive API documentation. You can access it
 
 ## Files
 
-- `Dockerfile`: Defines the Docker image.
-- `ddclient.conf`: Default ddclient configuration file.
-- `app.py`: FastAPI application that provides the API endpoints.
-- `ddclient_wrapper.sh`: Wrapper script that runs ddclient and pings healthchecks.io.
 - `docker-compose.yml`: Docker Compose configuration file.
+- `Dockerfile`: Defines the Docker image.
+- `src/config/ddclient.conf`: Default ddclient configuration file.
+- `src/ddclient_wrapper.sh`: Wrapper script that runs ddclient and pings healthchecks.io.
+- `src/main.py`: FastAPI application that provides the API endpoints.
 
 &nbsp;
 
