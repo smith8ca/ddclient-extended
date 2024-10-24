@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/smith8ca/ddclient-extended">
-    <img src="images/ddclient-extended-logo.png" alt="ddclient-extended-logo" width="25%" />
+    <img src="https://github.com/smith8ca/ddclient-extended/blob/main/images/ddclient-extended-196.png?raw=true" alt="ddclient-extended-logo" width="25%" />
   </a>
 </p>
 
