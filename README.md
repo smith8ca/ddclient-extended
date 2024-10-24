@@ -20,6 +20,8 @@ This project packages [ddclient](https://github.com/ddclient/ddclient) into a Do
   - [Credits](#credits)
   - [License](#license)
 
+&nbsp;
+
 ## Features
 
 - Runs `ddclient` to update dynamic DNS records.
@@ -27,11 +29,15 @@ This project packages [ddclient](https://github.com/ddclient/ddclient) into a Do
 - Pings `healthchecks.io` with the status of `ddclient` runs.
 - Allows optional overwriting of the default `ddclient.conf` file by mounting a custom configuration file.
 
+&nbsp;
+
 ## Prerequisites
 
 - Docker
 - Docker Compose (optional, for using Docker Compose)
 - Python 3.7+ (for running FastAPI locally)
+
+&nbsp;
 
 ## Getting Started
 
@@ -42,6 +48,8 @@ To build the Docker image, run the following command:
 ```sh
 docker build -t ddclient-api-container .
 ```
+
+&nbsp;
 
 ### Run the Docker Container
 
@@ -59,6 +67,8 @@ docker run -d -p 8000:8000 --name ddclient-api \
 
 Replace `YOUR-UNIQUE-ID` with your actual healthchecks.io unique ID.
 
+&nbsp;
+
 #### Run with Custom Configuration
 
 The container is designed to run with a custom `ddclient.conf` configuration. To do this, mount your custom `ddclient.conf` file as a volume as shown below:
@@ -73,6 +83,8 @@ docker run -d -p 8000:8000 --name ddclient-api \
 ```
 
 Replace `/path/to/your/ddclient.conf` with the actual path to the custom ddclient configuration file on your local machine. Check out the example [`ddclient.conf`](src/config/ddclient.conf.example) file to understand more.
+
+&nbsp;
 
 ### Run with Docker Compose
 
@@ -103,6 +115,8 @@ To run the Docker Compose setup, use the following command:
 docker-compose up -d
 ```
 
+&nbsp;
+
 ### Self-Signed Certificates
 
 By default, the `curl` command that pings healthchecks has the `--insecure` flag enabled to avoid issues with self-hosted environments. Otherwise, the `curl` commands will fail. You can read more about this behavior [here](https://curl.se/docs/sslcerts.html).
@@ -126,6 +140,8 @@ services:
 
 This will force the `curl` command to execute healthcheck pings over HTTPS using your certificate authority.
 
+&nbsp;
+
 ### Environment Variables
 
 The following environment variables can be used to configure the Docker container:
@@ -136,6 +152,8 @@ The following environment variables can be used to configure the Docker containe
 | `HEALTHCHECKS_URL`       | The base URL for healthchecks.io              |    _N/A_    |      No      |
 | `HEALTHCHECKS_ID`        | The unique ID for the healthchecks.io check   |    _N/A_    |      No      |
 | `HEALTHCHECKS_CUSTOM_CA` | Whether to use a custom certificate authority |    false    |      No      |
+
+&nbsp;
 
 ## API Endpoints
 
@@ -155,6 +173,8 @@ FastAPI automatically generates interactive API documentation. You can access it
 - **Swagger UI**: `http://localhost:8000/docs`
 - **ReDoc**: `http://localhost:8000/redoc`
 
+&nbsp;
+
 ## Files
 
 - `Dockerfile`: Defines the Docker image.
@@ -163,15 +183,21 @@ FastAPI automatically generates interactive API documentation. You can access it
 - `ddclient_wrapper.sh`: Wrapper script that runs ddclient and pings healthchecks.io.
 - `docker-compose.yml`: Docker Compose configuration file.
 
+&nbsp;
+
 ## Roadmap
 
 For upcoming features and planned improvements, please refer to the [ROADMAP.md](ROADMAP.md) file.
+
+&nbsp;
 
 ## Credits
 
 - **ddclient**: This project uses [ddclient](https://github.com/ddclient/ddclient), a Perl client used to update dynamic DNS entries for accounts on various DNS providers.
 - **FastAPI**: This project uses [FastAPI](https://fastapi.tiangolo.com/), a modern, fast (high-performance), web framework for building APIs with Python 3.7+ based on standard Python type hints.
 - **Healthchecks**: This project is built to work with [healthchecks](https://github.com/healthchecks/healthchecks), an open-source cron job and background task monitoring service
+
+&nbsp;
 
 ## License
 
