@@ -40,6 +40,8 @@
 - Docker
 - Docker Compose (optional)
 
+&nbsp;
+
 > [!IMPORTANT]
 > The default [`ddclient.conf`](src/config/ddclient.conf.example) file does not contain any valid DNS domain configurations and will result in nothing happening. While the default file can be used for testing, this container is designed to have a custom `ddclient.conf` file supplied as a mount.
 
