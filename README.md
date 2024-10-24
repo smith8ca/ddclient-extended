@@ -3,7 +3,6 @@
     <img src="images/ddclient-extended-logo.png" alt="ddclient-extended-logo" width="25%" />
   </a>
 </p>
-</br>
 
 <h1 align="center">
   DDClient Extended
