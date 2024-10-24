@@ -1,6 +1,6 @@
 services:
   ddclient-api:
-    image: ddclient-extended:latest
+    image: ghcr.io/smith8ca/ddclient-extended:latest
     container_name: ddclient-api
     ports:
       - "8000:8000"

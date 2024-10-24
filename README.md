@@ -1,24 +1,23 @@
 # DDClient Extended
 
-This project packages [ddclient](https://github.com/ddclient/ddclient) into a Docker container with a [FastAPI](https://fastapi.tiangolo.com/)-based API. The container allows you to run `ddclient` and expose an API to get the last update, last status, the most recent IP address, and health check status. Additionally, it implements optional pings to a [`healthchecks.io`](https://healthchecks.io/) service with the status every time `ddclient` runs.
+This project packages [ddclient](https://github.com/ddclient/ddclient) into a Docker container with a [FastAPI](https://fastapi.tiangolo.com/)-based API. The container allows you to run `ddclient` and expose an API to get the last update, last status, the most recent IP address, and health check status. Additionally, it implements optional pings to a [healthchecks.io](https://healthchecks.io/) service with the status every time `ddclient` runs.
 
-- [DDClient Extended](#ddclient-extended)
-  - [Features](#features)
-  - [Prerequisites](#prerequisites)
-  - [Getting Started](#getting-started)
-    - [Build the Docker Image](#build-the-docker-image)
-    - [Run the Docker Container](#run-the-docker-container)
-      - [Run with Default Configuration](#run-with-default-configuration)
-      - [Run with Custom Configuration](#run-with-custom-configuration)
-    - [Run with Docker Compose](#run-with-docker-compose)
-    - [Self-Signed Certificates](#self-signed-certificates)
-    - [Environment Variables](#environment-variables)
-  - [API Endpoints](#api-endpoints)
-    - [Accessing the API Documentation](#accessing-the-api-documentation)
-  - [Files](#files)
-  - [Roadmap](#roadmap)
-  - [Credits](#credits)
-  - [License](#license)
+1. [Features](#features)
+2. [Prerequisites](#prerequisites)
+3. [Getting Started](#getting-started)
+   1. [Building the Image Locally](#building-the-image-locally)
+   2. [Run the Docker Container](#run-the-docker-container)
+      1. [Run with Default Configuration](#run-with-default-configuration)
+      2. [Run with Custom Configuration](#run-with-custom-configuration)
+   3. [Run with Docker Compose](#run-with-docker-compose)
+   4. [Self-Signed Certificates](#self-signed-certificates)
+   5. [Environment Variables](#environment-variables)
+4. [API Endpoints](#api-endpoints)
+   1. [Accessing the API Documentation](#accessing-the-api-documentation)
+5. [Files](#files)
+6. [Roadmap](#roadmap)
+7. [Credits](#credits)
+8. [License](#license)
 
 &nbsp;
 
@@ -40,7 +39,7 @@ This project packages [ddclient](https://github.com/ddclient/ddclient) into a Do
 
 ## Getting Started
 
-### Build the Docker Image
+### Building the Image Locally
 
 Clone this repository to your local:
 
@@ -58,6 +57,12 @@ docker build -t ddclient-extended .
 
 ### Run the Docker Container
 
+First, pull the continaer image by running the following:
+
+```bash
+docker pull ghcr.io/smith8ca/ddclient-extended:latest
+```
+
 #### Run with Default Configuration
 
 The default `ddclient.conf` file is not configured with a valid DNS domain and will result in nothing happening. Howewver, if you are simply testing this project, you can run the container with the default `ddclient.conf` configuration using the following command:
@@ -67,7 +72,7 @@ docker run -d -p 8000:8000 --name ddclient-api \
     -e DDCLIENT_INTERVAL=360m \
     -e HEALTHCHECKS_URL=https://hc-ping.com \
     -e HEALTHCHECKS_ID=YOUR-UNIQUE-ID \
-    ddclient-extended
+    ghcr.io/smith8ca/ddclient-extended:latest
 ```
 
 Replace `YOUR-UNIQUE-ID` with your actual healthchecks.io unique ID.
@@ -84,7 +89,7 @@ docker run -d -p 8000:8000 --name ddclient-api \
     -e HEALTHCHECKS_URL=https://hc-ping.com \
     -e HEALTHCHECKS_ID=YOUR-UNIQUE-ID \
     -v /path/to/your/ddclient.conf:/tmp/ddclient.conf:ro \
-    ddclient-extended
+    ghcr.io/smith8ca/ddclient-extended:latest
 ```
 
 Replace `/path/to/your/ddclient.conf` with the actual path to the custom ddclient configuration file on your local machine. Check out the example [`ddclient.conf`](src/config/ddclient.conf.example) file to understand more.
@@ -98,7 +103,7 @@ To run the container using Docker Compose, modify the sample [`docker-compose.ym
 ```yaml
 services:
   ddclient-api:
-    image: ddclient-extended:latest
+    image: ghcr.io/smith8ca/ddclient-extended:latest
     container_name: ddclient-api
     ports:
       - "8000:8000"
@@ -129,7 +134,7 @@ If you are self-hosting Healthchecks and you would like the healthcheck pings to
 ```yaml
 services:
   ddclient-api:
-    image: ddclient-extended:latest
+    image: ghcr.io/smith8ca/ddclient-extended:latest
     container_name: ddclient-api
     ports:
       - "8000:8000"
