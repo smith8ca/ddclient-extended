@@ -45,7 +45,7 @@ This project packages [ddclient](https://github.com/ddclient/ddclient) into a Do
 
 To build the Docker image, run the following command:
 
-```sh
+```bash
 docker build -t ddclient-api-container .
 ```
 
@@ -59,9 +59,9 @@ To run the container with the default `ddclient.conf` configuration, use the fol
 
 ```bash
 docker run -d -p 8000:8000 --name ddclient-api \
+    -e DDCLIENT_INTERVAL=360m \
     -e HEALTHCHECKS_URL=https://hc-ping.com \
     -e HEALTHCHECKS_ID=YOUR-UNIQUE-ID \
-    -e HEALTHCHECKS_CUSTOM_CA=false \
     ddclient-api-container
 ```
 
@@ -75,10 +75,10 @@ The container is designed to run with a custom `ddclient.conf` configuration. To
 
 ```bash
 docker run -d -p 8000:8000 --name ddclient-api \
+    -e DDCLIENT_INTERVAL=360m \
     -e HEALTHCHECKS_URL=https://hc-ping.com \
     -e HEALTHCHECKS_ID=YOUR-UNIQUE-ID \
-    -e HEALTHCHECKS_CUSTOM_CA=false \
-    -v ./src/config/ddclient.conf:/tmp/ddclient.conf:ro \
+    -v /path/to/your/ddclient.conf:/tmp/ddclient.conf:ro \
     ddclient-api-container
 ```
 
@@ -98,11 +98,9 @@ services:
     ports:
       - "8000:8000"
     environment:
+      - DDCLIENT_INTERVAL=360m
       - HEALTHCHECKS_URL=https://hc-ping.com
       - HEALTHCHECKS_ID=YOUR-UNIQUE-ID
-      - HEALTHCHECKS_CUSTOM_CA=false
-    volumes:
-      - /path/to/your/ddclient.conf:/etc/ddclient/ddclient.conf
 ```
 
 Replace `YOUR-UNIQUE-ID` with your actual healthchecks.io unique ID. Replace `/path/to/your/ddclient.conf` with the actual path to the custom ddclient configuration file on your local machine.
@@ -133,7 +131,7 @@ services:
     environment:
       - HEALTHCHECKS_URL=https://example.lan
       - HEALTHCHECKS_ID=YOUR-UNIQUE-ID
-      - HEALTHCHECKS_CUSTOM_CA=false
+      - HEALTHCHECKS_CUSTOM_CA=true
     volumes:
       - /path/to/your/ca.pem:/etc/ssl/certs/ca.pem:ro
 ```
