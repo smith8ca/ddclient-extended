@@ -13,19 +13,15 @@
   <a href="https://github.com/ddclient/ddclient">ddclient</a> packaged into a Docker container with a <a href="https://fastapi.tiangolo.com/">FastAPI</a>-based backend API and optional integragion with <a href="https://healthchecks.io/">healthchecks.io</a>.
 </p>
 
-<!-- <p align="center">
-  <a href="https://github.com/gethomepage/homepage/actions/workflows/docker-publish.yml"><img alt="GitHub Workflow Status (with event)" src="https://img.shields.io/github/actions/workflow/status/gethomepage/homepage/docker-publish.yml"></a>
+<p align="center">
+  <img alt="GitHub License" src="https://img.shields.io/github/license/smith8ca/ddclient-extended"> 
   &nbsp;
-  <a href="https://crowdin.com/project/gethomepage" target="_blank"><img src="https://badges.crowdin.net/gethomepage/localized.svg"></a>
+  <a href="https://paypal.me/CharlesASmith" title="Donate"><img alt="GitHub Sponsors" src="https://img.shields.io/github/sponsors/smith8ca"></a> 
   &nbsp;
-  <a href="https://discord.gg/k4ruYNrudu"><img alt="Discord" src="https://img.shields.io/discord/1019316731635834932"></a>
+  <a href="https://hub.docker.com/r/chuck1041/ddclient-extended" title="Dockerhub"><img alt="Docker Stars" src="https://img.shields.io/docker/stars/chuck1041/ddclient-extended"></a> 
   &nbsp;
-  <a href="https://gethomepage.dev/" title="Docs"><img title="Docs" src="https://github.com/gethomepage/homepage/actions/workflows/docs-publish.yml/badge.svg"/></a>
-  &nbsp;
-  <a href="https://paypal.me/CharlesASmith" title="Donate"><img alt="GitHub Sponsors" src="https://img.shields.io/github/sponsors/smith8ca"></a>
+  <a href="https://github.com/smith8ca/ddclient-extended" title="Github"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/smith8ca/ddclient-extended"></a> 
 </p>
-</br> -->
-
 </br>
 
 # Features
