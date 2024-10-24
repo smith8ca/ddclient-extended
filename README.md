@@ -26,20 +26,6 @@
 </p>
 </br> -->
 
-- [Features](#features)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [With Docker](#with-docker)
-  - [From Source](#from-source)
-  - [Self-Signed Certificates](#self-signed-certificates)
-  - [Environment Variables](#environment-variables)
-- [API Endpoints](#api-endpoints)
-  - [Accessing the API Documentation](#accessing-the-api-documentation)
-- [Contributing](#contributing)
-  - [Roadmap](#roadmap)
-- [Credits](#credits)
-- [License](#license)
-
 </br>
 
 # Features
