@@ -1,6 +1,6 @@
 services:
   ddclient-api:
-    image: ddclient-api-container:latest
+    image: ddclient-extended:latest
     container_name: ddclient-api
     ports:
       - "8000:8000"

@@ -51,7 +51,7 @@ git clone https://github.com/smith8ca/ddclient-extended.git
 Build the Docker image by running the following:
 
 ```bash
-docker build -t ddclient-api-container .
+docker build -t ddclient-extended .
 ```
 
 &nbsp;
@@ -67,7 +67,7 @@ docker run -d -p 8000:8000 --name ddclient-api \
     -e DDCLIENT_INTERVAL=360m \
     -e HEALTHCHECKS_URL=https://hc-ping.com \
     -e HEALTHCHECKS_ID=YOUR-UNIQUE-ID \
-    ddclient-api-container
+    ddclient-extended
 ```
 
 Replace `YOUR-UNIQUE-ID` with your actual healthchecks.io unique ID.
@@ -84,7 +84,7 @@ docker run -d -p 8000:8000 --name ddclient-api \
     -e HEALTHCHECKS_URL=https://hc-ping.com \
     -e HEALTHCHECKS_ID=YOUR-UNIQUE-ID \
     -v /path/to/your/ddclient.conf:/tmp/ddclient.conf:ro \
-    ddclient-api-container
+    ddclient-extended
 ```
 
 Replace `/path/to/your/ddclient.conf` with the actual path to the custom ddclient configuration file on your local machine. Check out the example [`ddclient.conf`](src/config/ddclient.conf.example) file to understand more.
@@ -98,7 +98,7 @@ To run the container using Docker Compose, modify the sample [`docker-compose.ym
 ```yaml
 services:
   ddclient-api:
-    image: ddclient-api-container:latest
+    image: ddclient-extended:latest
     container_name: ddclient-api
     ports:
       - "8000:8000"
@@ -129,7 +129,7 @@ If you are self-hosting Healthchecks and you would like the healthcheck pings to
 ```yaml
 services:
   ddclient-api:
-    image: ddclient-api-container:latest
+    image: ddclient-extended:latest
     container_name: ddclient-api
     ports:
       - "8000:8000"
