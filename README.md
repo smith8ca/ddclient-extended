@@ -2,22 +2,22 @@
 
 This project packages [ddclient](https://github.com/ddclient/ddclient) into a Docker container with a [FastAPI](https://fastapi.tiangolo.com/)-based API. The container allows you to run `ddclient` and expose an API to get the last update, last status, the most recent IP address, and health check status. Additionally, it implements optional pings to a [healthchecks.io](https://healthchecks.io/) service with the status every time `ddclient` runs.
 
-1. [Features](#features)
-2. [Prerequisites](#prerequisites)
-3. [Getting Started](#getting-started)
-   1. [Building the Image Locally](#building-the-image-locally)
-   2. [Run the Docker Container](#run-the-docker-container)
-      1. [Run with Default Configuration](#run-with-default-configuration)
-      2. [Run with Custom Configuration](#run-with-custom-configuration)
-   3. [Run with Docker Compose](#run-with-docker-compose)
-   4. [Self-Signed Certificates](#self-signed-certificates)
-   5. [Environment Variables](#environment-variables)
-4. [API Endpoints](#api-endpoints)
-   1. [Accessing the API Documentation](#accessing-the-api-documentation)
-5. [Files](#files)
-6. [Roadmap](#roadmap)
-7. [Credits](#credits)
-8. [License](#license)
+- [Features](#features)
+- [Prerequisites](#prerequisites)
+- [Getting Started](#getting-started)
+  - [Building the Image Locally](#building-the-image-locally)
+  - [Run the Docker Container](#run-the-docker-container)
+    - [Run with Default Configuration](#run-with-default-configuration)
+    - [Run with Custom Configuration](#run-with-custom-configuration)
+  - [Run with Docker Compose](#run-with-docker-compose)
+  - [Self-Signed Certificates](#self-signed-certificates)
+  - [Environment Variables](#environment-variables)
+- [API Endpoints](#api-endpoints)
+  - [Accessing the API Documentation](#accessing-the-api-documentation)
+- [Files](#files)
+- [Roadmap](#roadmap)
+- [Credits](#credits)
+- [License](#license)
 
 &nbsp;
 
