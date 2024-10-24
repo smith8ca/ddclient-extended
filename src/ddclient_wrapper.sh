@@ -27,7 +27,7 @@
 #
 # Example:
 #   export HEALTHCHECKS_URL=https://example.com
-#   export HEALTHCHECKS_ID=YOUR-UNIQUE-ID
+#   export HEALTHCHECKS_ID=YOUR-UUID
 #   ./ddclient_wrapper.sh
 #
 # Author:

@@ -1,102 +1,70 @@
-# DDClient Extended
+<p align="center">
+  <a href="https://github.com/smith8ca/ddclient-extended">
+    <img src="images/ddclient-extended-logo.png" alt="ddclient-extended-logo" width="25%" />
+  </a>
+</p>
+</br>
 
-This project packages [ddclient](https://github.com/ddclient/ddclient) into a Docker container with a [FastAPI](https://fastapi.tiangolo.com/)-based API. The container allows you to run `ddclient` and expose an API to get the last update, last status, the most recent IP address, and health check status. Additionally, it implements optional pings to a [healthchecks.io](https://healthchecks.io/) service with the status every time `ddclient` runs.
+<h1 align="center">
+  DDClient Extended
+</h1>
+</br>
+
+<p align="center">
+  <a href="https://github.com/ddclient/ddclient">ddclient</a> packaged into a Docker container with a <a href="https://fastapi.tiangolo.com/">FastAPI</a>-based backend API and optional integragion with <a href="https://healthchecks.io/">healthchecks.io</a>.
+</p>
+
+<!-- <p align="center">
+  <a href="https://github.com/gethomepage/homepage/actions/workflows/docker-publish.yml"><img alt="GitHub Workflow Status (with event)" src="https://img.shields.io/github/actions/workflow/status/gethomepage/homepage/docker-publish.yml"></a>
+  &nbsp;
+  <a href="https://crowdin.com/project/gethomepage" target="_blank"><img src="https://badges.crowdin.net/gethomepage/localized.svg"></a>
+  &nbsp;
+  <a href="https://discord.gg/k4ruYNrudu"><img alt="Discord" src="https://img.shields.io/discord/1019316731635834932"></a>
+  &nbsp;
+  <a href="https://gethomepage.dev/" title="Docs"><img title="Docs" src="https://github.com/gethomepage/homepage/actions/workflows/docs-publish.yml/badge.svg"/></a>
+  &nbsp;
+  <a href="https://paypal.me/CharlesASmith" title="Donate"><img alt="GitHub Sponsors" src="https://img.shields.io/github/sponsors/smith8ca"></a>
+</p>
+</br> -->
 
 - [Features](#features)
-- [Prerequisites](#prerequisites)
 - [Getting Started](#getting-started)
-  - [Building the Image Locally](#building-the-image-locally)
-  - [Run the Docker Container](#run-the-docker-container)
-    - [Run with Default Configuration](#run-with-default-configuration)
-    - [Run with Custom Configuration](#run-with-custom-configuration)
-  - [Run with Docker Compose](#run-with-docker-compose)
+  - [Prerequisites](#prerequisites)
+  - [With Docker](#with-docker)
+  - [From Source](#from-source)
   - [Self-Signed Certificates](#self-signed-certificates)
   - [Environment Variables](#environment-variables)
 - [API Endpoints](#api-endpoints)
   - [Accessing the API Documentation](#accessing-the-api-documentation)
-- [Files](#files)
-- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+  - [Roadmap](#roadmap)
 - [Credits](#credits)
 - [License](#license)
 
-&nbsp;
+</br>
 
-## Features
+# Features
 
 - Runs `ddclient` to update dynamic DNS records.
 - Exposes a FastAPI-based API to expose execution information.
 - Pings `healthchecks.io` with the status of `ddclient` runs (see [API Endpoints](#api-endpoints)).
 - Allows mounting a custom `ddclient.conf` configuration file.
 
-&nbsp;
+</br>
+
+# Getting Started
 
 ## Prerequisites
 
 - Docker
 - Docker Compose (optional)
 
-&nbsp;
+</br>
 
-## Getting Started
+> [!IMPORTANT]
+> The default [`ddclient.conf`](src/config/ddclient.conf.example) file does not contain any valid DNS domain configurations and will result in nothing happening. While the default file can be used for testing, this container is designed to have a custom `ddclient.conf` file supplied as a mount.
 
-### Building the Image Locally
-
-Clone this repository to your local:
-
-```bash
-git clone https://github.com/smith8ca/ddclient-extended.git
-```
-
-Build the Docker image by running the following:
-
-```bash
-docker build -t ddclient-extended .
-```
-
-&nbsp;
-
-### Run the Docker Container
-
-First, pull the continaer image by running the following:
-
-```bash
-docker pull ghcr.io/smith8ca/ddclient-extended:latest
-```
-
-#### Run with Default Configuration
-
-The default `ddclient.conf` file is not configured with a valid DNS domain and will result in nothing happening. Howewver, if you are simply testing this project, you can run the container with the default `ddclient.conf` configuration using the following command:
-
-```bash
-docker run -d -p 8000:8000 --name ddclient-api \
-    -e DDCLIENT_INTERVAL=360m \
-    -e HEALTHCHECKS_URL=https://hc-ping.com \
-    -e HEALTHCHECKS_ID=YOUR-UNIQUE-ID \
-    ghcr.io/smith8ca/ddclient-extended:latest
-```
-
-Replace `YOUR-UNIQUE-ID` with your actual healthchecks.io unique ID.
-
-&nbsp;
-
-#### Run with Custom Configuration
-
-The container is designed to run with a custom `ddclient.conf` configuration. To do this, mount your custom `ddclient.conf` file to the container as shown below:
-
-```bash
-docker run -d -p 8000:8000 --name ddclient-api \
-    -e DDCLIENT_INTERVAL=360m \
-    -e HEALTHCHECKS_URL=https://hc-ping.com \
-    -e HEALTHCHECKS_ID=YOUR-UNIQUE-ID \
-    -v /path/to/your/ddclient.conf:/tmp/ddclient.conf:ro \
-    ghcr.io/smith8ca/ddclient-extended:latest
-```
-
-Replace `/path/to/your/ddclient.conf` with the actual path to the custom ddclient configuration file on your local machine. Check out the example [`ddclient.conf`](src/config/ddclient.conf.example) file to understand more.
-
-&nbsp;
-
-### Run with Docker Compose
+## With Docker
 
 To run the container using Docker Compose, modify the sample [`docker-compose.yml`](docker-compose.yml) file to meet your requirements or create a `docker-compose.yml` with the following content:
 
@@ -109,23 +77,44 @@ services:
       - "8000:8000"
     environment:
       - DDCLIENT_INTERVAL=360m
-      - HEALTHCHECKS_URL=https://hc-ping.com
-      - HEALTHCHECKS_ID=YOUR-UNIQUE-ID
+      - HEALTHCHECKS_URL=YOUR-HC-URL
+      - HEALTHCHECKS_ID=YOUR-UUID
     volumes:
       - /path/to/your/ddclient.conf:/tmp/ddclient.conf:ro
 ```
 
-Replace `YOUR-UNIQUE-ID` with your actual healthchecks.io UUID. Replace `/path/to/your/ddclient.conf` with the actual path to the custom ddclient configuration file on your local machine.
-
-To run the Docker Compose setup, use the following command:
+To launch with Docker Run:
 
 ```bash
-docker-compose up -d
+docker run -d -p 8000:8000 --name ddclient-api \
+    -e DDCLIENT_INTERVAL=360m \
+    -e HEALTHCHECKS_URL=YOUR-HC-URL \
+    -e HEALTHCHECKS_ID=YOUR-UUID \
+    -v /path/to/your/ddclient.conf:/tmp/ddclient.conf:ro \
+    ghcr.io/smith8ca/ddclient-extended:latest
 ```
 
-&nbsp;
+Be sure to update the environment variables accordingly. See the [Environment Variables](#environment-variables) section for more information.
 
-### Self-Signed Certificates
+</br>
+
+## From Source
+
+First, clone the repository:
+
+```bash
+git clone https://github.com/smith8ca/ddclient-extended.git
+```
+
+Build the Docker image by running the following:
+
+```bash
+docker build -t ddclient-extended .
+```
+
+</br>
+
+## Self-Signed Certificates
 
 By default, the `curl` command used to ping healthchecks has the `--insecure` flag enabled to avoid issues with self-signed certificates typically used in self-hosted environments. Otherwise, the `curl` commands will fail. You can read more about this behavior [here](https://curl.se/docs/sslcerts.html).
 
@@ -140,7 +129,7 @@ services:
       - "8000:8000"
     environment:
       - HEALTHCHECKS_URL=https://example.lan
-      - HEALTHCHECKS_ID=YOUR-UNIQUE-ID
+      - HEALTHCHECKS_ID=YOUR-UUID
       - HEALTHCHECKS_CUSTOM_CA=true
     volumes:
       - /path/to/your/ca.pem:/etc/ssl/certs/ca.pem:ro
@@ -148,9 +137,9 @@ services:
 
 This will force the `curl` command to execute healthcheck pings over HTTPS using your certificate authority.
 
-&nbsp;
+</br>
 
-### Environment Variables
+## Environment Variables
 
 The following environment variables can be used to configure the Docker container:
 
@@ -161,9 +150,9 @@ The following environment variables can be used to configure the Docker containe
 | `HEALTHCHECKS_ID`        | The UUID for the healthchecks.io check        |    _N/A_    |      No      |
 | `HEALTHCHECKS_CUSTOM_CA` | Whether to use a custom certificate authority |    false    |      No      |
 
-&nbsp;
+</br>
 
-## API Endpoints
+# API Endpoints
 
 The FastAPI application exposes the following API endpoints:
 
@@ -174,39 +163,33 @@ The FastAPI application exposes the following API endpoints:
 - **GET /last_update_timestamp**: Returns the timestamp of the last `ddclient` update.
 - **POST /run_ddclient**: Manually triggers the `ddclient` to run once and returns the output.
 
-### Accessing the API Documentation
+## Accessing the API Documentation
 
 FastAPI automatically generates interactive API documentation. You can access it at:
 
 - **Swagger UI**: `http://localhost:8000/docs`
 - **ReDoc**: `http://localhost:8000/redoc`
 
-&nbsp;
+</br>
 
-## Files
+# Contributing
 
-- `docker-compose.yml`: Docker Compose configuration file.
-- `Dockerfile`: Defines the Docker image.
-- `src/config/ddclient.conf`: Default ddclient configuration file.
-- `src/ddclient_wrapper.sh`: Wrapper script that runs ddclient and pings healthchecks.io.
-- `src/main.py`: FastAPI application that provides the API endpoints.
-
-&nbsp;
+Contributions are welcome! Please see the [CONTRIBUTING.md](CONTRIBUTING.md) file for more information.
 
 ## Roadmap
 
-For upcoming features and planned improvements, please refer to the [ROADMAP.md](ROADMAP.md) file.
+To see the project's wishlist for upcoming features and planned improvements, please refer to the [ROADMAP.md](ROADMAP.md) file.
 
-&nbsp;
+</br>
 
-## Credits
+# Credits
 
 - **ddclient**: This project uses [ddclient](https://github.com/ddclient/ddclient), a Perl client used to update dynamic DNS entries for accounts on various DNS providers.
 - **FastAPI**: This project uses [FastAPI](https://fastapi.tiangolo.com/), a modern, fast (high-performance), web framework for building APIs with Python 3.7+ based on standard Python type hints.
 - **Healthchecks**: This project is built to work with [healthchecks](https://github.com/healthchecks/healthchecks), an open-source cron job and background task monitoring service
 
-&nbsp;
+</br>
 
-## License
+# License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [GNU General Public License v3.0](LICENSE).

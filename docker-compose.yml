@@ -7,7 +7,7 @@ services:
     environment:
       - DDCLIENT_INTERVAL=360m # Optional: Update interval
       - HEALTHCHECKS_URL=https://example.lan # Optional: Healthchecks.io URL
-      - HEALTHCHECKS_ID=YOUR-UNIQUE-ID # Optional: Healthchecks.io UUID
+      - HEALTHCHECKS_ID=YOUR-UUID # Optional: Healthchecks.io UUID
       - HEALTHCHECKS_CUSTOM_CA=false # Optional: Use custom CA certificate
     volumes:
       - /path/to/your/ca.pem:/etc/ssl/certs/ca.pem:ro # Optional: Custom CA certificate
