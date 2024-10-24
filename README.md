@@ -18,7 +18,7 @@
   &nbsp;
   <a href="https://paypal.me/CharlesASmith" title="Donate"><img alt="GitHub Sponsors" src="https://img.shields.io/github/sponsors/smith8ca"></a> 
   &nbsp;
-  <a href="https://hub.docker.com/r/chuck1041/ddclient-extended" title="Dockerhub"><img alt="Docker Pulls" src="https://img.shields.io/docker/pulls/chuck1041/ddclient-extended"></a> 
+  <a href="https://hub.docker.com/r/chuck1041/ddclient-extended" title="Dockerhub"><img alt="Docker Image Size" src="https://img.shields.io/docker/image-size/chuck1041/ddclient-extended"></a> 
   &nbsp;
   <a href="https://github.com/smith8ca/ddclient-extended" title="Github"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/smith8ca/ddclient-extended"></a> 
 </p>
