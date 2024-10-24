@@ -1,8 +1,8 @@
-# DDClient API Container
+# DDClient Extended
 
 This project packages [ddclient](https://github.com/ddclient/ddclient) into a Docker container with a [FastAPI](https://fastapi.tiangolo.com/)-based API. The container allows you to run `ddclient` and expose an API to get the last update, last status, the most recent IP address, and health check status. Additionally, it implements optional pings to a [`healthchecks.io`](https://healthchecks.io/) service with the status every time `ddclient` runs.
 
-- [DDClient API Container](#ddclient-api-container)
+- [DDClient Extended](#ddclient-extended)
   - [Features](#features)
   - [Prerequisites](#prerequisites)
   - [Getting Started](#getting-started)
