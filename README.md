@@ -18,8 +18,7 @@
   &nbsp;
   <a href="https://paypal.me/CharlesASmith" title="Donate"><img alt="GitHub Sponsors" src="https://img.shields.io/github/sponsors/smith8ca"></a> 
   &nbsp;
-  <a href="https://hub.docker.com/r/chuck1041/ddclient-extended" title="Dockerhub"><img alt="Docker Pulls" src="https://img.shields.io/docker/pulls/chuck1041/ddclient-extended">
-  </a> 
+  <a href="https://hub.docker.com/r/chuck1041/ddclient-extended" title="Dockerhub"><img alt="Docker Pulls" src="https://img.shields.io/docker/pulls/chuck1041/ddclient-extended"></a> 
   &nbsp;
   <a href="https://github.com/smith8ca/ddclient-extended" title="Github"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/smith8ca/ddclient-extended"></a> 
 </p>
@@ -32,7 +31,7 @@
 - Pings `healthchecks.io` with the status of `ddclient` runs (see [API Endpoints](#api-endpoints)).
 - Allows mounting a custom `ddclient.conf` configuration file.
 
-</br>
+&nbsp;
 
 # Getting Started
 
@@ -41,7 +40,7 @@
 - Docker
 - Docker Compose (optional)
 
-</br>
+&nbsp;
 
 > [!IMPORTANT]
 > The default [`ddclient.conf`](src/config/ddclient.conf.example) file does not contain any valid DNS domain configurations and will result in nothing happening. While the default file can be used for testing, this container is designed to have a custom `ddclient.conf` file supplied as a mount.
@@ -78,7 +77,7 @@ docker run -d -p 8000:8000 --name ddclient-api \
 
 Be sure to update the environment variables accordingly. See the [Environment Variables](#environment-variables) section for more information.
 
-</br>
+&nbsp;
 
 ## From Source
 
@@ -94,7 +93,7 @@ Build the Docker image by running the following:
 docker build -t ddclient-extended .
 ```
 
-</br>
+&nbsp;
 
 ## Self-Signed Certificates
 
@@ -119,7 +118,7 @@ services:
 
 This will force the `curl` command to execute healthcheck pings over HTTPS using your certificate authority.
 
-</br>
+&nbsp;
 
 ## Environment Variables
 
@@ -132,7 +131,7 @@ The following environment variables can be used to configure the Docker containe
 | `HEALTHCHECKS_ID`        | The UUID for the healthchecks.io check        |    _N/A_    |      No      |
 | `HEALTHCHECKS_CUSTOM_CA` | Whether to use a custom certificate authority |    false    |      No      |
 
-</br>
+&nbsp;
 
 # API Endpoints
 
@@ -152,7 +151,7 @@ FastAPI automatically generates interactive API documentation. You can access it
 - **Swagger UI**: `http://localhost:8000/docs`
 - **ReDoc**: `http://localhost:8000/redoc`
 
-</br>
+&nbsp;
 
 # Contributing
 
@@ -162,7 +161,7 @@ Contributions are welcome! Please see the [CONTRIBUTING.md](CONTRIBUTING.md) fil
 
 To see the project's wishlist for upcoming features and planned improvements, please refer to the [ROADMAP.md](ROADMAP.md) file.
 
-</br>
+&nbsp;
 
 # Credits
 
@@ -170,7 +169,7 @@ To see the project's wishlist for upcoming features and planned improvements, pl
 - **FastAPI**: This project uses [FastAPI](https://fastapi.tiangolo.com/), a modern, fast (high-performance), web framework for building APIs with Python 3.7+ based on standard Python type hints.
 - **Healthchecks**: This project is built to work with [healthchecks](https://github.com/healthchecks/healthchecks), an open-source cron job and background task monitoring service
 
-</br>
+&nbsp;
 
 # License
 
