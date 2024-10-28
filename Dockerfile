@@ -1,33 +1,20 @@
-# Use an official Debian runtime as a parent image
 FROM debian:latest
 
-# Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Copy the Python requirements file
+COPY src/config/ddclient.conf.example /etc/ddclient/ddclient.conf
+COPY src/ddclient_wrapper.sh /usr/local/bin/ddclient_wrapper.sh
+COPY src/main.py /app/main.py
 COPY src/requirements.txt /tmp/requirements.txt
 
-# Install ddclient, Python, and FastAPI
 RUN apt-get update && \
     apt-get install -y ddclient python3 python3-pip curl && \
-    pip3 install -r tmp/requirements.txt --break-system-packages && \
+    pip3 install --no-cache-dir --upgrade -r tmp/requirements.txt --break-system-packages && \
+    chmod 600 /etc/ddclient/ddclient.conf && \
+    chmod +x /usr/local/bin/ddclient_wrapper.sh && \
     apt-get clean && \
+    pip3 cache purge && \
     rm -rf /var/lib/apt/lists/* /tmp/requirements.txt
-
-# Copy the default ddclient configuration file
-COPY src/config/ddclient.conf.example /etc/ddclient/ddclient.conf
-
-# Set permissions for the ddclient configuration file
-RUN chmod 600 /etc/ddclient/ddclient.conf
-
-# Copy the FastAPI application
-COPY src/main.py /app/main.py
-
-# Copy the wrapper script
-COPY src/ddclient_wrapper.sh /usr/local/bin/ddclient_wrapper.sh
-
-# Make the wrapper script executable
-RUN chmod +x /usr/local/bin/ddclient_wrapper.sh
 
 # Expose the FastAPI port
 EXPOSE 8000
