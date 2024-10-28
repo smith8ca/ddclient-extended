@@ -1,31 +1,34 @@
-# Define the stages of the CI/CD pipeline
-stages:
-  - build # Stage for building the Docker image
-  - push # Stage for pushing the Docker image to the registry
+# include:
+#   - project: 'group/subgroup/project'
+#     ref: "main"
+#     file: '/Application-cd.gitlab-ci.yml'
+#   - local: 'logical-environment.gitlab-ci.yml'
 
-# Job for building the Docker image
-build:
-  stage: build # Specify the stage this job belongs to
+default:
+  interruptible: true
+
+variables:
+  DEFAULT_RUNNER: europa
+
+stages:
+  - build-image
+  - push-image
+
+build-container-image:
+  stage: build-image
+  tags:
+    - ${DEFAULT_RUNNER}
   script:
-    # Build the Docker image and tag it with the CI registry image name
     - docker build -t $CI_REGISTRY_IMAGE .
   artifacts:
     paths:
       # Specify the files to be saved as artifacts
       - Dockerfile
-      - docker-image.tar
-  tags:
-    # Specify the runner tags to use for this job
-    - europa
 
-# Job for pushing the Docker image to the registry
-push:
-  stage: push # Specify the stage this job belongs to
-  script:
-    # Log in to the Docker registry using the CI registry credentials
-    - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin
-    # Push the Docker image to the registry
-    - docker push $CI_REGISTRY_IMAGE
+push-image-to-registry:
+  stage: push-image
   tags:
-    # Specify the runner tags to use for this job
-    - europa
+    - ${DEFAULT_RUNNER}
+  script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin
+    - docker push $CI_REGISTRY_IMAGE
